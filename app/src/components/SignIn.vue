@@ -1,41 +1,30 @@
 <script setup>
   import { ref } from 'vue'
-  import { useRouter } from 'vue-router'
-  import { marked } from 'marked'
-  const router = useRouter()
-  const routeParams = router.currentRoute.value.params
-  const recipe = ref("...")
-  const editing = ref(false)
-  const api = `${window.location.protocol}//${window.location.hostname}:3000`
+  import router from '../router'
+  const username = ref(undefined)
+  const password = ref(undefined)
 
-  fetch(`${api}/recipes/${routeParams.id}`)
-    .then(async (res) => {
-      recipe.value = (await (res.json())).markdown
-    })
-
-async function saveRecipe() {
-  console.log(recipe.value)
-  // TODO: error-handling
-  fetch(`${api}/recipes/${routeParams.id}`,
+async function signIn() {
+  // TODO: handle errors, this is identical to the function in Register.vue
+  fetch(`/api/signin`,
     {
       method: 'POST',
-      body: JSON.stringify({ markdown: recipe.value }),
+      body: JSON.stringify({ username: username.value, password: password.value }),
       mode: 'cors',
       headers: {
         "Content-Type": "application/json"
       }
     })
-    .then(async (res) => {
-      editing.value = false
+    .then(() => {
+      router.push('/')
     })
 }
 </script>
 
 <template>
-  <button @click="editing = true" v-if="!editing">Edit</button>
-  <div v-html="marked.parse(recipe)" />
-  <textarea v-if="editing" v-model="recipe"/>
-  <button @click="saveRecipe()" v-if="editing">Save</button>
+  <input v-model="username" placeholder="Username" />
+  <input v-model="password" placeholder="Password" />
+  <button @click="signIn()">Sign in</button>
 </template>
 
 <style scoped>
