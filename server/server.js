@@ -141,7 +141,11 @@ app.post('/users', async function(req, res) {
     } catch (e) {
       // admin / symlink users may already have a directory
     }
-    res.send(`Successfully created user ${req.body.username}.`)
+
+    req.login({ id: this.lastID, username: req.body.username } , function(err) {
+      if (err) { return next(err) }
+      res.send(`Successfully created user ${req.body.username}.`)
+    })
   } else {
     res.status(400).send(`User with username ${req.body.username} already exists.`)
   }

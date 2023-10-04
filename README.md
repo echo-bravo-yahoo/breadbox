@@ -1,5 +1,5 @@
 ### To do, soon
-- Automatically log users in after they register
+- Create repository
 - Fix ag/rg not working in vim
 - Wrap fetch, needs to handle server-side redirects becoming client-side routing
 - Server hot reload
@@ -22,3 +22,4 @@
 - Add auth for users
 - Add support for multiple users (split files/fs)
 - Symlink my existing recipes in for my user
+- Automatically log users in after they register
