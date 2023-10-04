@@ -3,9 +3,8 @@
   import { RouterLink } from 'vue-router'
   import DOMPurify from 'dompurify'
   const recipes = ref([])
-  const api = `${window.location.protocol}//${window.location.hostname}:3000`
 
-  fetch(`${api}/recipes`)
+fetch(`/api/recipes`, { credentials: 'include' })
     .then(async (res) => {
       recipes.value = await (res.json())
     })

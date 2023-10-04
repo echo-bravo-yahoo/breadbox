@@ -6,9 +6,8 @@
   const routeParams = router.currentRoute.value.params
   const recipe = ref("...")
   const editing = ref(false)
-  const api = `${window.location.protocol}//${window.location.hostname}:3000`
 
-  fetch(`${api}/recipes/${routeParams.id}`)
+  fetch(`/api/recipes/${routeParams.id}`)
     .then(async (res) => {
       recipe.value = (await (res.json())).markdown
     })
@@ -16,16 +15,17 @@
 async function saveRecipe() {
   console.log(recipe.value)
   // TODO: error-handling
-  fetch(`${api}/recipes/${routeParams.id}`,
+  fetch(`/api/recipes/${routeParams.id}`,
     {
       method: 'POST',
       body: JSON.stringify({ markdown: recipe.value }),
       mode: 'cors',
       headers: {
         "Content-Type": "application/json"
-      }
+      },
+      credentials: 'include'
     })
-    .then(async (res) => {
+    .then(async () => {
       editing.value = false
     })
 }
