@@ -1,11 +1,15 @@
 const { MongoClient } = require('mongodb')
 const dbUrl = 'mongodb://localhost:27017'
 const client = new MongoClient(dbUrl)
-const dbName = 'recipeTool'
+const dbName = 'users'
 
 async function setup() {
   await client.connect()
   console.log('Successfully connected to mongodb.')
+}
+
+async function cleanUp() {
+  await client.close()
 }
 
 async function doTask() {
@@ -15,4 +19,4 @@ async function doTask() {
   console.log(insertResult)
 }
 
-setup().then(doTask)
+setup().then(doTask).then(cleanUp)
