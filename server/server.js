@@ -1,6 +1,9 @@
 const express = require('express')
 
-const webAppUrl = 'http://localhost:5173'
+const prod = process.env.NODE_ENV === 'production'
+const hostPort = process.env.HOST_PORT || 3000
+
+const webAppUrl = prod ? `http://localhost:${hostPort}` : 'http://localhost:5173'
 
 const app = express()
 const fs = require('node:fs/promises')
@@ -30,7 +33,7 @@ const recipeRoot = path.resolve(__dirname, '../fs')
 const { errorHandler } = require('./utilities.js')
 
 const { MongoClient } = require('mongodb')
-const dbUrl = 'mongodb://localhost:27017'
+const dbUrl = 'mongodb://breadbox-db:27017'
 const client = new MongoClient(dbUrl)
 const dbName = 'users'
 let db
@@ -39,9 +42,13 @@ let db
  * Middleware                                             *
  *********************************************************/
 app.use(bodyParser.json())
-app.use(express.static('app/dist'))
+app.use(express.static(path.resolve(__dirname, '../app/dist')))
 app.use(errorHandler)
-app.use(cors({ origin: "http://localhost:5173", credentials: true }))
+if (prod) {
+  app.use(cors({ origin: `http://localhost:${hostPort}`, credentials: true }))
+} else {
+  app.use(cors({ origin: "http://localhost:5173", credentials: true }))
+}
 // TODO: replace secret
 app.use(session({ secret: 'lol' }))
 app.use(passport.authenticate('session'))
@@ -85,7 +92,7 @@ passport.deserializeUser(function(user, cb) {
  * Web application (production build)                     *
  *********************************************************/
 app.get('/', function(req, res) {
-  res.sendFile('app/dist/index.html', { root: __dirname })
+  res.sendFile('app/dist/index.html', { root: path.resolve(__dirname + '/..') })
 })
 
 /**********************************************************

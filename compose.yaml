@@ -1,0 +1,30 @@
+services:
+  breadbox-server:
+    image: breadbox:latest
+    container_name: breadbox-server
+    environment:
+      NODE_ENV: production
+      HOST_PORT: 3003
+    ports:
+      - "3003:3000"
+    volumes:
+      - /home/swift/workspace/recipe/fs:/recipes/fs
+    networks:
+      - breadbox
+
+  breadbox-db:
+    image: mongo:7
+    container_name: breadbox-db
+      # environment:
+      # MONGO_INITDB_ROOT_USERNAME: root
+      # MONGO_INITDB_ROOT_PASSWORD: af98132hkaskf91
+    volumes:
+      - mongodb:/data/db
+    networks:
+      - breadbox
+
+volumes:
+  mongodb:
+networks:
+  breadbox:
+    driver: bridge

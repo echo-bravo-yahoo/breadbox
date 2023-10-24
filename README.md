@@ -25,3 +25,10 @@
 - Automatically log users in after they register
 - Server hot reload
 - Move server dependencies from top level package.json to server/package.json
+
+### Docker
+#### Build
+`docker build --tag breadbox --file Dockerfile .`
+
+#### Compose
+`docker compose up`

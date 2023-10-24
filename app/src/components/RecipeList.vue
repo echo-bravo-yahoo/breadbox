@@ -3,9 +3,10 @@
   import router from '../router'
   import { RouterLink } from 'vue-router'
   import DOMPurify from 'dompurify'
+  import { makeEndpoint } from '../util/api.js'
   const recipes = ref([])
 
-fetch(`/api/recipes`, { credentials: 'include' })
+fetch(makeEndpoint(`/recipes`), { credentials: 'include' })
     .then(async (res) => {
       if (res.url.split('/').pop() === 'signin') {
         router.push('/signin')
@@ -15,7 +16,7 @@ fetch(`/api/recipes`, { credentials: 'include' })
 
 async function signOut() {
   // TODO: error-handling
-  fetch(`/api/signout`, {
+  fetch(makeEndpoint(`/signout`), {
       method: 'POST',
       body: "",
       mode: 'cors',
