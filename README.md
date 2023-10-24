@@ -1,21 +1,23 @@
 ### To do, soon
-- Fix ag/rg not working in vim
-- Wrap fetch, needs to handle server-side redirects becoming client-side routing
-- Add user interface to create new files
-- Containerize application for single host use
-    - Publish container to dockerhub
+- Publish container to dockerhub
+- Secure mongodb instance with auth
+- Migrate from dbName 'users' to 'recipeTool'
+- Fix local development
 
 ### To do, mid-term
+- Wrap fetch, needs to handle server-side redirects becoming client-side routing
+- Add user interface to create new files
 - Error-handling, lol
-- Migrate from dbName 'users' to 'recipeTool'
 - Move to monorepo model
 
 ### To do, long-term
+- Fix ag/rg not working in vim
 - Styling and layout
 - Replace pbkdf2-password with node:crypto
 - Upgrade session store for express-session
 
 ### Done
+- Containerize application for single host use
 - Create repository
 - Add markdown view/edit
 - Add a database
