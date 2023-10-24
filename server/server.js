@@ -164,4 +164,12 @@ async function setupServer() {
   db = client.db(dbName)
 }
 
+process.on('SIGTERM', () => {
+  console.log('Closed Express server')
+  server.close(() => {
+    db.close()
+    console.log('Closed mongodb connection')
+  })
+})
+
 setupServer().then(() => app.listen(3000))
