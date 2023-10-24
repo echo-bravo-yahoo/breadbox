@@ -1,8 +1,9 @@
 ### To do, soon
-- Create repository
 - Fix ag/rg not working in vim
 - Wrap fetch, needs to handle server-side redirects becoming client-side routing
-- Add interface to create new files
+- Add user interface to create new files
+- Containerize application for single host use
+    - Publish container to dockerhub
 
 ### To do, mid-term
 - Error-handling, lol
@@ -15,6 +16,7 @@
 - Upgrade session store for express-session
 
 ### Done
+- Create repository
 - Add markdown view/edit
 - Add a database
 - Add auth for users
