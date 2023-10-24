@@ -2,3 +2,4 @@
 server/db/**
 server/secrets.json
 fs/**
+**/Session.vim
