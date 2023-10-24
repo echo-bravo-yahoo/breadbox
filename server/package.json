@@ -8,7 +8,7 @@
     "start": "npm run start-app-web-server & npm run start-server",
     "start-server": "npm run start-db & npm run start-express",
     "start-express": "nodemon --watch . -e js --ignore scripts/ server.js",
-    "start-db": "mongod --dbpath server/db > /dev/null 2>&1 &",
+    "start-db": "mongod --dbpath db > /dev/null 2>&1 &",
     "start-app-web-server": "(cd ../app; npm run dev 2>&1)"
   },
   "author": "",
@@ -20,7 +20,8 @@
     "express-session": "^1.17.3",
     "mongodb": "^6.1.0",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
+    "passport-local": "^1.0.0",
+    "pbkdf2-password": "^1.2.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.1"
