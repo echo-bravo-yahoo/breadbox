@@ -89,48 +89,41 @@ passport.deserializeUser(function(user, cb) {
 })
 
 /**********************************************************
- * Web application (production build)                     *
- *********************************************************/
-app.get('/', function(req, res) {
-  res.sendFile('app/dist/index.html', { root: path.resolve(__dirname + '/..') })
-})
-
-/**********************************************************
  * API                                                    *
  *********************************************************/
-app.get('/recipes', ensureLoggedIn, async function (req, res) {
+app.get('/api/recipes', ensureLoggedIn, async function (req, res) {
   const directory = path.normalize(`${recipeRoot}/${req.user.username}`)
   const recipes = (await fs.readdir(directory))
     .map((fileName) => path.basename(fileName, '.md'))
   res.send(JSON.stringify(recipes))
 })
 
-app.get('/recipes/:id', ensureLoggedIn, async function(req, res) {
+app.get('/api/recipes/:id', ensureLoggedIn, async function(req, res) {
   const directory = path.normalize(`${recipeRoot}/${req.user.username}`)
   const recipe = await fs.readFile(`${directory}/${req.params.id}.md`)
   res.send({ markdown: recipe.toString() })
 })
 
-app.post('/recipes/:id', ensureLoggedIn, async function(req, res) {
+app.post('/api/recipes/:id', ensureLoggedIn, async function(req, res) {
   const directory = path.normalize(`${recipeRoot}/${req.user.username}`)
   await fs.writeFile(`${directory}/${req.params.id}.md`, req.body.markdown)
   res.send(`Successfully updated recipe ${req.params.id}.`)
 })
 
-app.post('/signin', passport.authenticate('local', {
+app.post('/api/signin', passport.authenticate('local', {
   successRedirect: webAppUrl,
   failureRedirect: `${webAppUrl}/signin`,
   failureMessage: true
 }))
 
-app.post('/signout', function(req, res, next) {
+app.post('/api/signout', function(req, res, next) {
   req.logout(function(err) {
     if (err) { return next(err) }
-    res.redirect('/')
+    res.send(`Signed out.`)
   })
 })
 
-app.post('/users', async function(req, res) {
+app.post('/api/users', async function(req, res) {
   const users = db.collection('users')
   const existingUser = await users.findOne({ username: req.body.username })
 
@@ -158,9 +151,17 @@ app.post('/users', async function(req, res) {
   }
 })
 
+/**********************************************************
+ * Web application (production build)                     *
+ *********************************************************/
+app.get(/^\/(?!api).*$/, function(req, res) {
+  res.sendFile('app/dist/index.html', { root: path.resolve(__dirname + '/..') })
+})
+
 async function setupServer() {
   await client.connect()
   console.log('Successfully connected to mongodb.')
+  console.log(`Set up with a recipe root of ${recipeRoot}.`)
   db = client.db(dbName)
 }
 
