@@ -1,5 +1,7 @@
 **/node_modules/**
 server/db/**
+!server/db/.gitkeep
 server/secrets.json
-fs/**
+server/fs/**
+!server/fs/.gitkeep
 **/Session.vim
