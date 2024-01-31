@@ -159,6 +159,7 @@ app.get(/^\/(?!api).*$/, function(req, res) {
 })
 
 async function setupServer() {
+  console.log('Connecting to mongodb...')
   await client.connect()
   console.log('Successfully connected to mongodb.')
   console.log(`Set up with a recipe root of ${recipeRoot}.`)
