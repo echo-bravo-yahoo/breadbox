@@ -4,7 +4,8 @@ services:
     container_name: breadbox-server
     environment:
       NODE_ENV: production
-      HOST_PORT: 3003
+      HOST_PORT: 3003 # can we delete this?
+      breadboxPath: "/recipes/server/server.js"
     ports:
       - "3003:3000"
     volumes:

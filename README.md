@@ -1,3 +1,8 @@
+### To do, today
+- Fix breadboxPath messiness
+- Fix production deploys
+- Fix hostPort messiness
+
 ### To do, soon
 - Publish container to dockerhub
 - Secure mongodb instance with auth
@@ -17,6 +22,7 @@
 - Upgrade session store for express-session
 
 ### Done
+- Set up docker for local development
 - Containerize application for single host use
 - Create repository
 - Add markdown view/edit
@@ -27,6 +33,12 @@
 - Automatically log users in after they register
 - Server hot reload
 - Move server dependencies from top level package.json to server/package.json
+
+### How do I do local development?
+For local development, `docker compose --file ./compose-dev.yaml up`. This will use the containerized database, webserver, and vite webapp server. It watches and hot reloads both the webserver and the webapp. The recipe filesystem is written to `./fs/`.
+
+### How do I deploy?
+Great question, more info coming...
 
 ### Docker
 #### Build

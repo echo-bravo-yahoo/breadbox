@@ -2,6 +2,6 @@
 server/db/**
 !server/db/.gitkeep
 server/secrets.json
-server/fs/**
-!server/fs/.gitkeep
+fs/**
+!fs/.gitkeep
 **/Session.vim

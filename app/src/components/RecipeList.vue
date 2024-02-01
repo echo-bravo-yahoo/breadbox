@@ -3,31 +3,15 @@
   import router from '../router'
   import { RouterLink } from 'vue-router'
   import DOMPurify from 'dompurify'
-  import { makeEndpoint } from '../util/api.js'
+  import { call } from '../util/api.js'
   const recipes = ref([])
 
-fetch(makeEndpoint(`/recipes`), { credentials: 'include' })
-    .then(async (res) => {
-      if (res.url.split('/').pop() === 'signin') {
-        router.push('/signin')
-      }
-      recipes.value = await (res.json())
-    })
+  call({ url: `/recipes` })
+  .then((res) => recipes.value = res )
 
-async function signOut() {
-  // TODO: error-handling
-  fetch(makeEndpoint(`/signout`), {
-      method: 'POST',
-      body: "",
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(() => {
-      router.push('/')
-    })
-}
+  async function signOut() {
+    return call({ url: `/signout`, method: 'POST' })
+  }
 </script>
 
 <template>

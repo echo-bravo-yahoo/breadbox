@@ -1,29 +1,17 @@
 <script setup>
   import { ref } from 'vue'
   import router from '../router'
-  import { makeEndpoint } from '../util/api.js'
+  import { call } from '../util/api.js'
   const username = ref(undefined)
   const password = ref(undefined)
 
-async function signIn() {
-  // TODO: handle errors, this is identical to the function in Register.vue
-  fetch(makeEndpoint(`/signin`),
-    {
-      method: 'POST',
-      body: JSON.stringify({ username: username.value, password: password.value }),
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      }
-    })
-    .then(() => {
-      router.push('/')
-    })
-}
+  async function signIn() {
+    call({ url: `/signin`, method: 'POST', body: { username: username.value, password: password.value } })
+  }
 
-function register() {
-  router.push('/register')
-}
+  function register() {
+    router.push('/register')
+  }
 </script>
 
 <template>

@@ -2,33 +2,23 @@
   import { ref } from 'vue'
   import { useRouter } from 'vue-router'
   import { marked } from 'marked'
-  import { makeEndpoint } from '../util/api.js'
+  import { call } from '../util/api.js'
   const router = useRouter()
   const routeParams = router.currentRoute.value.params
   const recipe = ref("...")
   const editing = ref(false)
 
-  fetch(makeEndpoint(`/recipes/${routeParams.id}`))
-    .then(async (res) => {
-      recipe.value = (await (res.json())).markdown
-    })
+  call({ url: `/recipes/${routeParams.id}` })
+  .then((res) => recipe.value = res.markdown)
 
-async function saveRecipe() {
-  // TODO: error-handling
-  fetch(makeEndpoint(`/recipes/${routeParams.id}`),
-    {
+  async function saveRecipe() {
+    call({
+      url: `/recipes/${routeParams.id}`,
       method: 'POST',
-      body: JSON.stringify({ markdown: recipe.value }),
-      mode: 'cors',
-      headers: {
-        "Content-Type": "application/json"
-      },
-      credentials: 'include'
+      body: { markdown: recipe.value }
     })
-    .then(async () => {
-      editing.value = false
-    })
-}
+    .then(() => editing.value = false)
+  }
 </script>
 
 <template>
