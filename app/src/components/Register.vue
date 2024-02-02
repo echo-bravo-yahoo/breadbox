@@ -4,14 +4,14 @@
   const username = ref(undefined)
   const password = ref(undefined)
 
-async function register() {
-  // TODO: handle errors, this is identical to the function in SignIn.vue
-  call({
-    url: `/users`,
-    method: 'POST',
-    body: { username: username.value, password: password.value },
-  })
-}
+  async function register() {
+    // TODO: handle errors, this is identical to the function in SignIn.vue
+    call({
+      url: `/users`,
+      method: 'POST',
+      body: { username: username.value, password: password.value },
+    })
+  }
 </script>
 
 <template>

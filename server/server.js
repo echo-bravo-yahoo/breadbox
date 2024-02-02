@@ -32,7 +32,7 @@ const { errorHandler } = require('./utilities.js')
 
 const { MongoClient } = require('mongodb')
 const client = new MongoClient('mongodb://breadbox-db:27017')
-const dbName = 'users'
+const dbName = 'breadbox'
 let db
 
 const store = new MongoDBStore({
@@ -48,7 +48,7 @@ store.on('error', console.error)
 app.use(bodyParser.json())
 app.use(express.static(path.resolve(__dirname, '../app/dist')))
 if (prod) {
-  app.use(cors({ origin: `http://localhost:${hostPort}`, credentials: true }))
+  app.use(cors({ origin: `http://localhost:5173`, credentials: true }))
 } else {
   app.use(cors({ origin: "http://localhost:5173", credentials: true }))
 }

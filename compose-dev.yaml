@@ -5,9 +5,9 @@ services:
     working_dir: "/recipes/app"
     environment:
       NODE_ENV: development
-      breadboxPath: "/recipes/app/node_modules/vite/bin/vite.js --host"
+      SCRIPT_PATH: "/recipes/app/node_modules/vite/bin/vite.js --host"
     ports:
-      - "5173:5173"
+      - "3000:5173"
     volumes:
       - ./app:/recipes/app
     networks:
@@ -18,9 +18,7 @@ services:
     container_name: breadbox-server
     environment:
       NODE_ENV: development
-      breadboxPath: "/recipes/server/server.js"
-    ports:
-      - "3000:3000"
+      SCRIPT_PATH: "/recipes/server/server.js"
     volumes:
       - ./fs:/recipes/fs
       - ./server:/recipes/server
@@ -30,9 +28,9 @@ services:
   breadbox-db:
     image: mongo:7
     container_name: breadbox-db
-      # environment:
-      # MONGO_INITDB_ROOT_USERNAME: root
-      # MONGO_INITDB_ROOT_PASSWORD: af98132hkaskf91
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongodb:/data/db
     networks:

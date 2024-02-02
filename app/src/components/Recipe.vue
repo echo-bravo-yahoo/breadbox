@@ -6,10 +6,11 @@
   const router = useRouter()
   const routeParams = router.currentRoute.value.params
   const recipe = ref("...")
+  const editingRecipe = ref("")
   const editing = ref(false)
 
   call({ url: `/recipes/${routeParams.id}` })
-  .then((res) => recipe.value = res.markdown)
+  .then((res) => { recipe.value = res.markdown; editingRecipe.value = res.markdown })
 
   async function saveRecipe() {
     call({
@@ -23,8 +24,9 @@
 
 <template>
   <button @click="editing = true" v-if="!editing">Edit</button>
-  <div v-html="marked.parse(recipe)" />
-  <textarea v-if="editing" v-model="recipe"/>
+  <button @click="editing = false; editingRecipe = recipe" v-if="editing">Cancel</button>
+  <div v-html="editing ? marked.parse(editingRecipe) : marked.parse(recipe)" />
+  <textarea v-if="editing" v-model="editingRecipe"/>
   <button @click="saveRecipe()" v-if="editing">Save</button>
 </template>
 

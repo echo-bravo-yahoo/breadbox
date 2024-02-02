@@ -5,3 +5,4 @@ server/secrets.json
 fs/**
 !fs/.gitkeep
 **/Session.vim
+secrets.env

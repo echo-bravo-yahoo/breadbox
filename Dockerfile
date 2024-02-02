@@ -21,4 +21,4 @@ EXPOSE 3000/tcp
 EXPOSE 5173/tcp
 
 WORKDIR /recipes
-CMD nodemon $breadboxPath
+CMD nodemon $SCRIPT_PATH
