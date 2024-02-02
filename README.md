@@ -36,14 +36,10 @@
 - Move server dependencies from top level package.json to server/package.json
 
 ### How do I do local development?
-For local development, `docker compose --file ./compose-dev.yaml --env-file "./secrets.env" up`. This will use the containerized database, webserver, and vite webapp server. It watches and hot reloads both the webserver and the webapp. The recipe filesystem is written to `./fs/`.
+For local development, `docker compose --file ./compose-dev.yaml --env-file "./secrets.env" up`. This will use the containerized database, webserver, and vite webapp server. It watches and hot reloads both the webserver and the webapp. The recipe filesystem is written to `./fs/`. The web application and API are both available at `localhost:3000`; vite serves the web app, and vite proxy forwards api requests to `breadbox-server`.
+
+### How do I test a production build?
+For local testing of a production build, first build a fresh docker image with `docker build --tag breadbox --file Dockerfile .`. Then, run `docker compose --file ./compose-prod.yaml --env-file "./secrets.env" up`. This will use the containerized database and webserver, and serve the web application from the webserver, available at `localhost:3000`. Since it uses built artifacts, neither the server nor web app hot reload.
 
 ### How do I deploy?
 Great question, more info coming...
-
-### Docker
-#### Build
-`docker build --tag breadbox --file Dockerfile .`
-
-#### Compose
-`docker compose up`
